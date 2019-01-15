@@ -5,7 +5,7 @@ function setupScene() {
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     // création de la caméra
-    var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 5, 1000);
+    var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
 
     // positionnement de la caméra
     camera.position.z = 10;
