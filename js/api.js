@@ -16,5 +16,3 @@ function getEarthquakes() {
 
     return earthquakes;
 }
-
-getEarthquakes();
