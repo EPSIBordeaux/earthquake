@@ -1,7 +1,7 @@
 function setupScene() {
     // création du renderer
     var renderer = new THREE.WebGLRenderer();
-    document.body.appendChild(renderer.domElement);
+    document.getElementById('container').appendChild(renderer.domElement);
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     // création de la caméra
@@ -9,7 +9,6 @@ function setupScene() {
 
     // positionnement de la caméra
     camera.position.z = 100;
-
     // création de la scène
     var scene = new THREE.Scene();
 
