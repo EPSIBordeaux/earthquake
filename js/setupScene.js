@@ -8,7 +8,7 @@ function setupScene() {
     var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 5, 1000);
 
     // positionnement de la caméra
-    camera.position.z = 10;
+    camera.position.z = 100;
 
     // création de la scène
     var scene = new THREE.Scene();
