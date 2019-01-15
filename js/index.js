@@ -10,31 +10,20 @@ var earth = createSphere(15, 120, 120, groupterre, undefined, true);
 
 var nuages = createSphere(15.1, 120, 120, groupterre, undefined, false);
 
-var pivot = new THREE.Object3D();
 var dot = createSphere(1, 10, 10, groupterre, undefined, false);
 dot.position.set(16, 0, 0);
-
-//groupterre.add(pivot);
-//pivot.position.set(0, 0, 0);
-//pivot.add(dot);
 
 var lattitude = document.getElementById('lattitude'),
     longitude = document.getElementById('longitude');
  
 lattitude.onchange = function(){
-    var x = 16 * Math.cos(THREE.Math.degToRad(lattitude.value)) * Math.cos(THREE.Math.degToRad(longitude.value));
-    var y = 16 * Math.sin(THREE.Math.degToRad(lattitude.value));
-    var z = 16 * Math.cos(THREE.Math.degToRad(lattitude.value)) * Math.sin(THREE.Math.degToRad(longitude.value))
-
-    dot.position.set(x, y, z);
+    var xyz = GeoToCartesian(lattitude.value, -longitude.value, false);
+    dot.position.set(xyz[0] , xyz[1], xyz[2]);
 }
 
 longitude.onchange = function(){
-    var x = 16 * Math.cos(THREE.Math.degToRad(lattitude.value)) * Math.cos(THREE.Math.degToRad(longitude.value));
-    var y = 16 * Math.sin(THREE.Math.degToRad(lattitude.value));
-    var z = 16 * Math.cos(THREE.Math.degToRad(lattitude.value)) * Math.sin(THREE.Math.degToRad(longitude.value))
-
-    dot.position.set(x, y, z);
+    var xyz = GeoToCartesian(lattitude.value, -longitude.value, false);
+    dot.position.set(xyz[0] , xyz[1], xyz[2]);
 }
 
 loadTexture("textures/earth_color.jpg", function (texture) {
