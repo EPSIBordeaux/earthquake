@@ -17,12 +17,12 @@ var lattitude = document.getElementById('lattitude'),
     longitude = document.getElementById('longitude');
  
 lattitude.onchange = function(){
-    var xyz = GeoToCartesian(lattitude.value, -longitude.value, false);
+    var xyz = GeoToCartesian(lattitude.value, longitude.value, 16,  false);
     dot.position.set(xyz[0] , xyz[1], xyz[2]);
 }
 
 longitude.onchange = function(){
-    var xyz = GeoToCartesian(lattitude.value, -longitude.value, false);
+    var xyz = GeoToCartesian(lattitude.value, longitude.value, 16, false);
     dot.position.set(xyz[0] , xyz[1], xyz[2]);
 }
 
