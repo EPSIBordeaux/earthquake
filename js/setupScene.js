@@ -4,6 +4,9 @@ function setupScene() {
     document.getElementById('container').appendChild(renderer.domElement);
     renderer.setSize(window.innerWidth, window.innerHeight);
 
+    // event click
+    document.addEventListener('mousedown', onMouseDown, false);
+
     // création de la caméra
     var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
 

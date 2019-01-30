@@ -20,7 +20,7 @@ for(i = 0; i < earthquakes.features.length; i++)
 {
     var earthquake = earthquakes.features[i];
 
-    console.log(earthquake);
+    //console.log(earthquake);
 
     var lon = earthquake.geometry.coordinates[0];
     var lat = earthquake.geometry.coordinates[1];
@@ -34,6 +34,29 @@ lattitude.onchange = function(){
 
 longitude.onchange = function(){
     dot = createEarthquakeMarker(lattitude.value, longitude.value, 15, groupterre);
+}
+
+function onMouseDown(e) {
+    var vectorMouse = new THREE.Vector3( //vector from camera to mouse
+        -(window.innerWidth/2-e.clientX)*2/window.innerWidth,
+        (window.innerHeight/2-e.clientY)*2/window.innerHeight,
+        -1/Math.tan(22.5*Math.PI/180)); //22.5 is half of camera frustum angle 45 degree
+    vectorMouse.applyQuaternion(environment.camera.quaternion);
+    vectorMouse.normalize();
+
+    for(i = 0; i < dots.length; i++)
+    {
+        var vectorObject = new THREE.Vector3(); //vector from camera to object
+        vectorObject.set(dots[i].position.x - environment.camera.position.x,
+            dots[i].position.y - environment.camera.position.y,
+            dots[i].position.z - environment.camera.position.z);
+        vectorObject.normalize();
+        if (vectorMouse.angleTo(vectorObject)*180/Math.PI < 1)
+        {
+            //mouse's position is near object's position
+            console.log(earthquakes.features[i]);
+        }
+    }
 }
 
 loadTexture("textures/earth_color.jpg", function (texture) {
