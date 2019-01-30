@@ -10,20 +10,17 @@ var earth = createSphere(15, 120, 120, groupterre, undefined, true);
 
 var nuages = createSphere(15.1, 120, 120, groupterre, undefined, false);
 
-var dot = createSphere(1, 10, 10, groupterre, undefined, false);
-dot.position.set(16, 0, 0);
+var dot = createEarthquakeMarker(0,0,15,groupterre);
 
 var lattitude = document.getElementById('lattitude'),
     longitude = document.getElementById('longitude');
  
 lattitude.onchange = function(){
-    var xyz = GeoToCartesian(lattitude.value, longitude.value, 16,  false);
-    dot.position.set(xyz[0] , xyz[1], xyz[2]);
+    dot = createEarthquakeMarker(lattitude.value, longitude.value, 15, groupterre);
 }
 
 longitude.onchange = function(){
-    var xyz = GeoToCartesian(lattitude.value, longitude.value, 16, false);
-    dot.position.set(xyz[0] , xyz[1], xyz[2]);
+    dot = createEarthquakeMarker(lattitude.value, longitude.value, 15, groupterre);
 }
 
 loadTexture("textures/earth_color.jpg", function (texture) {
