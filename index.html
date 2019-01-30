@@ -9,10 +9,28 @@
             margin: 0;
             overflow: hidden;
         }
+        canvas {
+            z-index: 0;
+        }
+        #container{
+            z-index: -1;
+        }
+        #form {
+            position: fixed;
+            z-index: 99;
+
+            background: red;
+        }
     </style>
 </head>
 
 <body>
+
+    <div id="form">
+        <input id="lattitude" type ="number" min ="-90" max="90" step ="1" value ="0"/>
+        <input id="longitude" type ="number" min ="-180" max="180" step ="1" value ="0"/>
+    </div>
+    <div id="container"></div>
     <script src="https://threejs.org/build/three.min.js"></script>
     <script src="./OrbitControls.js"></script>
     <script src="js/api.js"></script>
@@ -20,6 +38,7 @@
     <script src="js/lightSetup.js"></script>
     <script src="js/createSphere.js"></script>
     <script src="js/loadTexture.js"></script>
+    <script src="js/GeoToCartesian.js"></script>
     <script src="js/index.js"></script>
 </body>
 
