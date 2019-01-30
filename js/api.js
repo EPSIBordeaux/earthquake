@@ -9,7 +9,7 @@ function getEarthquakes() {
 
     if (req.status === 200) {
         earthquakes = JSON.parse(req.response);
-        console.log(earthquakes);
+        //console.log(earthquakes);
     } else {
         console.error("Status de la réponse: %d (%s)", req.status, req.statusText);
     }

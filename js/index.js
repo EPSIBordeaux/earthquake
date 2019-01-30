@@ -10,11 +10,24 @@ var earth = createSphere(15, 120, 120, groupterre, undefined, true);
 
 var nuages = createSphere(15.1, 120, 120, groupterre, undefined, false);
 
-var dot = createEarthquakeMarker(0,0,15,groupterre);
-
 var lattitude = document.getElementById('lattitude'),
     longitude = document.getElementById('longitude');
- 
+
+var earthquakes = getEarthquakes();
+var dots = [];
+
+for(i = 0; i < earthquakes.features.length; i++)
+{
+    var earthquake = earthquakes.features[i];
+
+    console.log(earthquake);
+
+    var lon = earthquake.geometry.coordinates[0];
+    var lat = earthquake.geometry.coordinates[1];
+
+    dots[i] = createEarthquakeMarker(lat, lon, 15, groupterre);
+}
+
 lattitude.onchange = function(){
     dot = createEarthquakeMarker(lattitude.value, longitude.value, 15, groupterre);
 }

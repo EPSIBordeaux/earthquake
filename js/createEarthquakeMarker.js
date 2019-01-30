@@ -1,12 +1,9 @@
 function createEarthquakeMarker(lat, lon, radius, addToGroup) {
-    var cone = createCone({color: 0xffff00}, 0.7, 0.7, 4, 1, addToGroup);
-
-    cone.rotateZ(-Math.PI/2 + THREE.Math.degToRad(lat))
-    cone.rotateX(THREE.Math.degToRad(lon));
+    var dot = createSphere(0.2, 10, 10, addToGroup, undefined, false);
 
     var xyz = GeoToCartesian(lat, lon, radius, false);
 
-    cone.position.set(xyz[0], xyz[1], xyz[2]);
+    dot.position.set(xyz[0], xyz[1], xyz[2]);
 
-    return cone;
+    return dot;
 }
