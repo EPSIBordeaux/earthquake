@@ -10,29 +10,47 @@
             overflow: hidden;
         }
         canvas {
-            z-index: 0;
+            /*z-index: 0;*/
         }
         #container{
-            z-index: -1;
+            /*z-index: -1;*/
         }
         #form {
             position: fixed;
-            z-index: 99;
+            /*z-index: 99;*/
 
             background: red;
+        }
+        #details {
+            position: absolute;
+            top:0;
+            /*z-index: 9;*/
+            background-color: #f1f1f1;
+            border: 1px solid #d3d3d3;
+            text-align: center;
+            visibility: hidden;
+            /*background: transparent;*/
+        }
+
+        #detailsHeader {
+            padding: 10px;
+            cursor: move;
+            /*z-index: 10;*/
+            background-color: #2196F3;
+            color: #fff;
         }
     </style>
 </head>
 
 <body>
-
-    <div id="form">
-        <input id="lattitude" type ="number" min ="-90" max="90" step ="1" value ="0"/>
-        <input id="longitude" type ="number" min ="-180" max="180" step ="1" value ="0"/>
-    </div>
     <div id="container"></div>
+    <div id="details">
+        <div id="detailsHeader">Earthquake details</div>
+    </div>
     <script src="https://threejs.org/build/three.min.js"></script>
     <script src="./OrbitControls.js"></script>
+    <script src="js/earthquakeDetails.js">  </script>
+    <script src="js/mouseEvents.js"></script>
     <script src="js/api.js"></script>
     <script src="js/setupScene.js"></script>
     <script src="js/lightSetup.js"></script>

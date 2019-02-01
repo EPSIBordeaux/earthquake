@@ -1,4 +1,4 @@
-const SPEED_EARTH = THREE.Math.degToRad(1);
+const SPEED_EARTH = THREE.Math.degToRad(0.1);
 const SPEED_CLOUDS = SPEED_EARTH / 2;
 
 const environment = setupScene();
@@ -6,56 +6,20 @@ const environment = setupScene();
 var groupterre = new THREE.Group();
 environment.scene.add(groupterre);
 
-var earth = createSphere(15, 120, 120, groupterre, undefined, true);
+var earth = createSphere(15, 120, 120, groupterre, undefined, new THREE.MeshPhongMaterial(), false);
+var nuages = createSphere(15.1, 120, 120, groupterre, undefined, new THREE.MeshPhongMaterial(), false);
 
-var nuages = createSphere(15.1, 120, 120, groupterre, undefined, false);
-
-var lattitude = document.getElementById('lattitude'),
-    longitude = document.getElementById('longitude');
-
-var earthquakes = getEarthquakes();
+var earthquakes = getEarthquakes().features;
 var dots = [];
 
-for(i = 0; i < earthquakes.features.length; i++)
-{
-    var earthquake = earthquakes.features[i];
+for(i = 0; i < earthquakes.length; i++)
+    dots[i] = createEarthquakeMarker(earthquakes[i], 15, groupterre);
 
-    //console.log(earthquake);
-
-    var lon = earthquake.geometry.coordinates[0];
-    var lat = earthquake.geometry.coordinates[1];
-
-    dots[i] = createEarthquakeMarker(lat, lon, 15, groupterre);
-}
-
-lattitude.onchange = function(){
-    dot = createEarthquakeMarker(lattitude.value, longitude.value, 15, groupterre);
-}
-
-longitude.onchange = function(){
-    dot = createEarthquakeMarker(lattitude.value, longitude.value, 15, groupterre);
-}
-
-function onMouseDown(e) {
-    var vectorMouse = new THREE.Vector3( //vector from camera to mouse
-        -(window.innerWidth/2-e.clientX)*2/window.innerWidth,
-        (window.innerHeight/2-e.clientY)*2/window.innerHeight,
-        -1/Math.tan(22.5*Math.PI/180)); //22.5 is half of camera frustum angle 45 degree
-    vectorMouse.applyQuaternion(environment.camera.quaternion);
-    vectorMouse.normalize();
-
-    for(i = 0; i < dots.length; i++)
+function earthquakeFromDot(dot) {
+    for(i=0;i<dots.length;i++)
     {
-        var vectorObject = new THREE.Vector3(); //vector from camera to object
-        vectorObject.set(dots[i].position.x - environment.camera.position.x,
-            dots[i].position.y - environment.camera.position.y,
-            dots[i].position.z - environment.camera.position.z);
-        vectorObject.normalize();
-        if (vectorMouse.angleTo(vectorObject)*180/Math.PI < 1)
-        {
-            //mouse's position is near object's position
-            console.log(earthquakes.features[i]);
-        }
+        if(dots[i] == dot)
+            return (earthquakes[i]);
     }
 }
 
@@ -74,10 +38,43 @@ lightSetup(environment.scene, earth);
 
 var controls = new THREE.OrbitControls(environment.camera, environment.renderer.domElement);
 
+function toScreenPosition(obj, camera)
+{
+    corners = [
+        new THREE.Vector3,
+        new THREE.Vector3,
+        new THREE.Vector3,
+        new THREE.Vector3 ];
+
+    var widthHalf = 0.5*environment.renderer.context.canvas.width;
+    var heightHalf = 0.5*environment.renderer.context.canvas.height;
+
+    var halfWidth = 0.5;
+    var halfDepth = 0.5;
+
+    corners[0].set(obj.position.x - halfWidth, obj.position.y, obj.position.z + halfDepth);
+    corners[1].set(obj.position.x + halfWidth, obj.position.y, obj.position.z + halfDepth);
+    corners[2].set(obj.position.x - halfWidth, obj.position.y, obj.position.z - halfDepth);
+    corners[3].set(obj.position.x + halfWidth, obj.position.y, obj.position.z - halfDepth);
+
+    for(i=0;i<corners.length;i++)
+    {
+        corners[i].project(camera);
+        corners[i].x = ( corners[i].x * widthHalf ) + widthHalf;
+        corners[i].y = - ( corners[i].y * heightHalf ) + heightHalf;
+    }
+
+    return corners;
+}
+
 var animate = function() {
-    //earth.rotateY(SPEED_EARTH);
+    groupterre.rotateY(SPEED_EARTH);
     nuages.rotateY(SPEED_CLOUDS);
     controls.update();
+    checkIntersect();
+
+    toScreenPosition(dots[0], environment.camera)
+
     environment.renderer.render(environment.scene, environment.camera);
     requestAnimationFrame(animate);
 }
