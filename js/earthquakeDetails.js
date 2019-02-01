@@ -15,13 +15,13 @@ function showEarthquakeDetails(dot, eq)
     div.innerHTML += "<br><a> Mmi : "+ eq.properties.mmi + "Rms :"+ eq.properties.rms +"</a>"
     div.innerHTML += "<br><a> Country : "+ eq.properties.net + "Place :"+ eq.properties.place +"</a>"
     div.innerHTML += "<br><a> Sig : "+ eq.properties.sig + "Time :"+ eq.properties.time +"</a>"
-    div.innerHTML += "<br><a> Url : "+ eq.properties.url+"</a><br>"
+    div.innerHTML += "<br><a> Url : <a href="+ eq.properties.url+">"+eq.properties.url+"</a><br><br>"
 
 
     var header = document.getElementById("detailsHeader");
     header.style.backgroundColor = '#' + dot.material.color.getHexString();
 
-
+    dragElement(document.getElementById("details"));
 }
 
 // Make the DIV element draggable:
