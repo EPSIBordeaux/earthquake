@@ -1,4 +1,4 @@
-const SPEED_EARTH = THREE.Math.degToRad(0.1);
+const SPEED_EARTH = THREE.Math.degToRad(0.03);
 const SPEED_CLOUDS = SPEED_EARTH / 2;
 
 const environment = setupScene();
